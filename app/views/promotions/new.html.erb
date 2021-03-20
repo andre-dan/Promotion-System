@@ -1,10 +1,13 @@
 <h1>Registrar uma promoção </h1>
-<ul>
-  <% @promotion.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-</ul>
-<%= form_with model: @promotion, local: true do |form|%>
+<% if @promotion.errors.any? %>
+  <h4>Encontramos erro, promoção não foi salva</h4>
+  <ul>
+    <% @promotion.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= form_with model: @promotion do |form|%>
   <div>
     <%= form.label :name, 'Nome' %>
     <%= form.text_field :name%>
