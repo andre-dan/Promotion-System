@@ -7,7 +7,7 @@
     <% end %>
   </ul>
 <% end %>
-<%= form_with model: @promotion do |form|%>
+<%= form_with model: @promotion, local: true do |form|%>
   <div>
     <%= form.label :name, 'Nome' %>
     <%= form.text_field :name%>
