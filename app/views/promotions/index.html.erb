@@ -1,3 +1,4 @@
+<%= flash[:notice] %>
 <%= link_to 'Voltar', root_path %>
 <%= link_to 'Registrar uma promoção', new_promotion_path %>
 <% if @promotions.empty?%>
@@ -12,5 +13,6 @@
     <dd><%= promotion.description %></dd>
     <dt>Descrição</dt>
     <dd><%= number_to_percentage(promotion.discount_rate, separator: ',', precision: 2 ) %></dd>
+    <dt><%= link_to 'Apagar', promotion, method: :delete %></dt>
   </dl>
 <% end %>

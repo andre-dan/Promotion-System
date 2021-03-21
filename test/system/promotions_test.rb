@@ -151,4 +151,15 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_text 'Cliente atualizado com sucesso'
     assert_text new_name
   end
+
+  test 'Destroy Promotion' do 
+    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                      expiration_date: '22/12/2033')
+
+    visit promotions_path
+    click_on 'Apagar'
+
+    assert_text 'Promoção excluída com sucesso'
+  end
 end

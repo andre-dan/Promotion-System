@@ -34,6 +34,15 @@ class PromotionsController < ApplicationController
     end
   end
 
+  def destroy
+    @promotion = Promotion.find(params[:id])
+    if @promotion.destroy
+      redirect_to promotions_path, notice: 'Promoção excluída com sucesso'
+    else
+      render :index
+    end
+  end
+
   def generate_coupons
     @promotion = Promotion.find(params[:id])
     (1..@promotion.coupon_quantity).each do |number|
