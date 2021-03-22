@@ -1,0 +1,12 @@
+<h1>Cadastrar um Produto </h1>
+<%= form_with model: @product_category, local:true do |form|%>
+  <div>
+    <%= form.label :name, 'Nome' %>
+    <%= form.text_field :name%>
+  </div>
+  <div>
+    <%= form.label :code, 'Código' %>
+    <%= form.text_field :code %>
+  </div>
+  <%= form.submit "Criar produto" %>
+<% end %>

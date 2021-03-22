@@ -1,0 +1,20 @@
+<h1>Lista de Categorias de Produtos</h1>
+<% if @product_category.empty? %>
+  <h2>Não existe nenhum produto cadastrado</h2>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <td>Nome do Produto</td>
+    </tr>
+    <tbody>
+      <% @product_category.each do |product|%>
+        <tr>
+          <td>
+            <%= product.name %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </thead>
+</table>
