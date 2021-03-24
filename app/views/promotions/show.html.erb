@@ -1,4 +1,4 @@
-<%= link_to 'Voltar', promotions_path %>
+ <%= link_to 'Voltar', promotions_path %>
 <h3> <%= @promotion.name %></h3>
 <dl>
   <dt><%= Promotion.human_attribute_name :description %></dt>
@@ -17,6 +17,10 @@
 <% end %>
 <div>
   <% @promotion.coupons.each do |coupon|%>
-    <p><%= coupon.code%></p>
-  <% end %>
-</div>
+    <div id="coupon-<%= coupon.code.parameterize %>">
+      <p><%= coupon.code %> (<%= Coupon.human_attribute_name("status.#{coupon.status}")%>)</p>
+      <% if coupon.active? %>
+        <%= link_to 'Desabilitar', disable_coupon_path(coupon), method: :post, data: { disable_with: 'Estamos desabilitando.....'} %>
+      <% end %>
+    <% end %>
+  </div>
