@@ -64,7 +64,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
-    click_on 'Criar promoção'
+    click_on 'Criar Promoção'
 
     assert_text 'não pode ficar em branco', count: 5
   end

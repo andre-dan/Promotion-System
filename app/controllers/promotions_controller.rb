@@ -14,7 +14,7 @@ class PromotionsController < ApplicationController
   def create
     @promotion = Promotion.new(promotion_params)
     if @promotion.save
-      redirect_to @promotion
+      redirect_to @promotion, notice: t('.success')
     else
       render :new
     end
@@ -25,7 +25,7 @@ class PromotionsController < ApplicationController
 
   def update
     if @promotion.update(promotion_params)
-      redirect_to promotion_path(@promotion.id), notice: 'Cliente atualizado com sucesso'
+      redirect_to promotion_path(@promotion.id), notice: t('.success')
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class PromotionsController < ApplicationController
 
   def destroy
     if @promotion.destroy
-      redirect_to promotions_path, notice: 'Promoção excluída com sucesso'
+      redirect_to promotions_path, notice: t('.exclude')
     else
       render :index
     end
@@ -41,7 +41,7 @@ class PromotionsController < ApplicationController
 
   def generate_coupons
     @promotion.generate_coupons!
-    redirect_to @promotion, notice: 'Cupons gerados com sucesso'
+    redirect_to @promotion, notice: t('.success')
   end
 
   private 

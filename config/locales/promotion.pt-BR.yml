@@ -1,0 +1,27 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      promotion:
+        one: Promoção
+        other: Promoções
+    attributes:
+      promotion:
+        name: Nome 
+        code: Código
+        description: Descrição
+        discount_rate: Desconto
+        coupon_quantity: Quantidade de cupons
+        expiration_date: Data de término
+  generate_coupons: Gerar cupons
+  promotions:
+    show:
+      generate_coupons: Gerar cupons      
+    generate_coupons:
+      success: Cupons gerados com sucesso
+    update:
+      success: Promoção atualizada com sucesso
+    create:
+      success: Promoção Criado com sucesso
+    destroy:
+      exclude: Promoção excluída com sucesso  
