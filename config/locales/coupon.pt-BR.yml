@@ -1,14 +1,14 @@
 ---
-  pt-Br:
+  pt-BR:
     activerecord:
-      model:
+      models:
         coupon: Cupom
       attributes:
         coupon:
           code: Código
         coupon/status:
           active: Ativo 
-          disabled: Desabilitar
+          disabled: Desabilitado
 
     coupons:
       disable:

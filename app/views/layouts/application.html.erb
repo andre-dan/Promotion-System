@@ -9,9 +9,8 @@
   </head>
   <body>
     <table>
-      <tr>
-        <th><%= link_to 'Home', root_path %></th>
-      </tr>
+      <th><%= link_to 'Home', root_path %></th>
+      <th><%= link_to 'Cadastrar', new_user_registration_path %></th>
     </table>
     <p><%= flash[:notice] %></p>
     <p><%= flash[:alert] %></p>

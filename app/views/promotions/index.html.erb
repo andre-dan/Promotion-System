@@ -10,7 +10,7 @@
   <dl>
     <dt>Descrição</dt>
     <dd><%= promotion.description %></dd>
-    <dt>Descrição</dt>
+    <dt>Desconto</dt>
     <dd><%= number_to_percentage(promotion.discount_rate, separator: ',', precision: 2 ) %></dd>
     <dt><%= link_to 'Apagar', promotion, method: :delete %></dt>
   </dl>

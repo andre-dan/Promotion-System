@@ -21,6 +21,8 @@ Bundler.require(*Rails.groups)
 
 module PromotionSystem
   class Application < Rails::Application
+
+    config.i18n.default_locale = "pt-BR" 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
