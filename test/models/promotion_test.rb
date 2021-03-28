@@ -43,7 +43,7 @@ class PromotionTest < ActiveSupport::TestCase
     promotion.generate_coupons!
     #assert promotion.coupons.size == promotion.coupon_quantity
     assert_equal promotion.coupons.size, promotion.coupon_quantity
-    assert_equal promotion.coupons.first.code, 'NATAL10 - 0001'
+    assert_equal promotion.coupons.first.code, 'NATAL10-0001'
   end
 
   test 'generate coupons cannot be called twice' do 

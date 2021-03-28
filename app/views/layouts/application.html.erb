@@ -8,10 +8,18 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <table>
-      <th><%= link_to 'Home', root_path %></th>
-      <th><%= link_to 'Cadastrar', new_user_registration_path %></th>
-    </table>
+    <nav>
+      <p><%= link_to 'Home', root_path %></p>
+      <% if user_signed_in? %>
+        <%= current_user.email %>
+        <%= link_to 'Sair', '#' %>
+        <%= link_to 'Promoções' , promotions_path %>
+        <%= link_to 'Produtos' , product_categories_path %>
+      <% else %>
+        <%= link_to 'Cadastrar', new_user_registration_path %>
+        <%= link_to 'Entrar', new_user_session_path %>
+      <% end %>
+    </nav>
     <p><%= flash[:notice] %></p>
     <p><%= flash[:alert] %></p>
     <%= yield %>
