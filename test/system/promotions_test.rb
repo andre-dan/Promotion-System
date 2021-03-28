@@ -130,7 +130,8 @@ class PromotionsTest < ApplicationSystemTestCase
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
                                   coupon_quantity: 100, expiration_date: '22/12/2033')
-    
+
+    login_as_before
     visit promotion_path(promotion)
     click_on 'Gerar cupons'
 
@@ -149,6 +150,7 @@ class PromotionsTest < ApplicationSystemTestCase
                                   code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                                   expiration_date: '22/12/2033')
 
+    login_as_before
     new_name = 'Ano Novo'
     visit(edit_promotion_path(promotion.id))
     fill_in('Nome', with: new_name)
@@ -163,6 +165,7 @@ class PromotionsTest < ApplicationSystemTestCase
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
 
+    login_as_before
     visit promotions_path
     click_on 'Apagar'
 
@@ -181,10 +184,29 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_current_path new_user_session_path
   end
 
-  private
+  test 'do view details without login' do 
+    promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                  code: 'NATAL10', discount_rate: 10,
+                                  coupon_quantity: 100, expiration_date: '22/12/2033')
 
-  def login_as_before
-    user = User.create!(email:'andre@gmail.com', password:'password')
-    login_as user, scope: :user
+    visit promotion_path(promotion)
+
+    assert_current_path new_user_session_path
+  end
+
+  test 'can not create promotion without login' do
+    visit new_promotion_path
+
+    assert_current_path new_user_session_path
+  end
+
+  test 'can not editing without login' do 
+    promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                  code: 'NATAL10', discount_rate: 10,
+                                  coupon_quantity: 100, expiration_date: '22/12/2033')
+
+    visit promotion_path(promotion.id)
+
+    assert_current_path new_user_session_path
   end
 end

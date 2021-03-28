@@ -8,6 +8,7 @@ class CouponsTest < ApplicationSystemTestCase
 
     promotion.generate_coupons!
 
+    login_as_before
     visit promotion_path(promotion)
     within 'div#coupon-natal10-0001' do
       click_on 'Desabilitar'

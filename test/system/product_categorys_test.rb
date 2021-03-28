@@ -4,6 +4,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   test 'view product ' do
     ProductCategory.create!(name: 'Produto AntiFraude', code: 'ANTIFRA')
 
+    login_as_before  
     visit root_path
     click_on 'Produtos'
 
@@ -30,6 +31,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   test 'return to home page' do
     ProductCategory.create!(name: 'Produto AntiFraude', code: 'ANTIFRA')
 
+    login_as_before  
     visit root_path
     click_on 'Produtos'
     click_on 'Home'
@@ -61,6 +63,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   end
 
   test 'create and attributes cannot be blank' do
+    login_as_before
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
