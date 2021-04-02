@@ -25,3 +25,8 @@ pt-BR:
       success: Promoção Criado com sucesso
     destroy:
       exclude: Promoção excluída com sucesso  
+    search:
+      result:
+        zero: "Nenhuma promoção encontrada para o termo: %{term}"
+        one: "%{count} promoção encontrada para o termo: %{term}"
+        other: "%{count} promoções encontradas para o termo: %{term}"  
