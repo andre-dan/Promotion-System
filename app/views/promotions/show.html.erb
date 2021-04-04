@@ -12,9 +12,15 @@
   <dt><%= Promotion.human_attribute_name :coupon_quantity %></dt>
   <dd><%= @promotion.coupon_quantity %></dd>
 </dl>
+<% if @promotion.approved? %>
+  <p>Aprovada por: <%= @promotion.approver.email %></p>
 <% if @promotion.coupons.empty? %>
   <%= button_to t('.generate_coupons'), generate_coupons_promotion_path(@promotion) %>
 <% end %>
+<% elsif @promotion.can_approve?(current_user) %> 
+  <%= link_to 'Aprovar', approve_promotion_path(@promotion), method: :post, data: {confirm: 'Tem Certeza? pois não poderá desfazer.'} %>
+<% end %>
+
 <% @promotion.coupons.each do |coupon|%>
   <div id="coupon-<%= coupon.code.parameterize %>">
     <p><%= coupon.code %> (<%= Coupon.human_attribute_name("status.#{coupon.status}")%>)</p>

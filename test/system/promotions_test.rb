@@ -2,14 +2,14 @@ require 'application_system_test_case'
 
 class PromotionsTest < ApplicationSystemTestCase
   test 'view promotions' do
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                      expiration_date: '22/12/2033', user: user)
     Promotion.create!(name: 'Cyber Monday', coupon_quantity: 100,
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
-                      expiration_date: '22/12/2033')
-    login_as_before
+                      expiration_date: '22/12/2033', user: user)
 
     visit root_path
     click_on 'Promoções'
@@ -23,14 +23,15 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'view promotion details' do
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                      expiration_date: '22/12/2033', user: user)
     Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
-                      expiration_date: '22/12/2033')
-    login_as_before  
+                      expiration_date: '22/12/2033', user: user)
+      
     visit root_path
     click_on 'Promoções'
     click_on 'Cyber Monday'
@@ -52,11 +53,11 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'view promotions and return to home page' do
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
-                      
-    login_as_before                  
+                      expiration_date: '22/12/2033', user: user)
+                                        
     visit root_path
     click_on 'Promoções'
     click_on 'Voltar'
@@ -65,10 +66,10 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'view details and return to promotions page' do
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
-    login_as_before
+                      expiration_date: '22/12/2033', user: user)
 
     visit root_path
     click_on 'Promoções'
@@ -80,7 +81,7 @@ class PromotionsTest < ApplicationSystemTestCase
 
   test 'create promotion' do
     login_as_before
-    visit root_path
+    visit root_path 
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
     fill_in 'Nome', with: 'Cyber Monday'
@@ -111,11 +112,11 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'create and code/name must be unique' do
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
-
-    login_as_before  
+                      expiration_date: '22/12/2033', user: user)
+  
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
@@ -127,11 +128,14 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'generate coupons for a promotion' do
+    user = login_as_before
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
-                                  coupon_quantity: 100, expiration_date: '22/12/2033')
+                                  coupon_quantity: 100, expiration_date: '22/12/2033', user: user)
+    promotion.create_promotion_approval(
+      user: User.create!(email: 'john.doe@iugu.com.br', password: '1234567')
+    )
 
-    login_as_before
     visit promotion_path(promotion)
     click_on 'Gerar cupons'
 
@@ -146,22 +150,22 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'search promotions by term and finds results' do
+    user = login_as_before
     christmas = Promotion.create!(name: 'Natal',
                                   description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
                                   coupon_quantity: 100,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', user: user)
     christmassy = Promotion.create!(name: 'Natalina',
                                     description: 'Promoção de Natal',
                                     code: 'NATAL11', discount_rate: 10,
                                     coupon_quantity: 100,
-                                    expiration_date: '22/12/2033')
+                                    expiration_date: '22/12/2033', user: user)
     cyber_monday = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                                      description: 'Promoção de Cyber Monday',
                                      code: 'CYBER15', discount_rate: 15,
-                                     expiration_date: '22/12/2033')
+                                     expiration_date: '22/12/2033', user: user)
 
-    login_as_before
     visit root_path
     click_on 'Promoções'
     fill_in 'Busca', with: 'natal'
@@ -174,17 +178,17 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'search promotions by term and finds one result' do
+    user = login_as_before
     christmas = Promotion.create!(name: 'Natal',
                                   description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
                                   coupon_quantity: 100,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', user: user)
     cyber_monday = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                                      description: 'Promoção de Cyber Monday',
                                      code: 'CYBER15', discount_rate: 15,
-                                     expiration_date: '22/12/2033')
+                                     expiration_date: '22/12/2033', user: user)
 
-    login_as_before
     visit root_path
     click_on 'Promoções'
     fill_in 'Busca', with: 'natal'
@@ -196,22 +200,23 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'search promotions by term and do not find results' do
+    user = login_as_before
     christmas = Promotion.create!(name: 'Natal',
                                   description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
                                   coupon_quantity: 100,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', user: user)
     christmassy = Promotion.create!(name: 'Natalina',
                                     description: 'Promoção de Natal',
                                     code: 'NATAL11', discount_rate: 10,
                                     coupon_quantity: 100,
-                                    expiration_date: '22/12/2033')
+                                    expiration_date: '22/12/2033', user: user)
     cyber_monday = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                                      description: 'Promoção de Cyber Monday',
                                      code: 'CYBER15', discount_rate: 15,
-                                     expiration_date: '22/12/2033')
+                                     expiration_date: '22/12/2033', user: user)
 
-    login_as_before
+    
     visit root_path
     click_on 'Promoções'
     fill_in 'Busca', with: 'test'
@@ -223,28 +228,30 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_text 'Nenhuma promoção encontrada para o termo: test'
   end
 
-
-  test 'Promotion Edition' do
+  #TODO: Edit promotion only if the user is the create'
+  #redirect_to root_path, notice: 'Permissão negada: Você não é o Usuario Criador dessa Promoção' unless @promotion.user == current_user
+  
+  test 'Editing Promotion' do
+    user = login_as_before
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', user: user)
 
-    login_as_before
     new_name = 'Ano Novo'
-    visit(edit_promotion_path(promotion.id))
-    fill_in('Nome', with: new_name)
-    click_on('Atualizar promoção')
+    visit edit_promotion_path(promotion.id)
+    fill_in 'Nome', with: new_name
+    click_on 'Atualizar promoção'
 
     assert_text 'Promoção atualizada com sucesso'
     assert_text new_name
   end
 
-  test 'Destroy Promotion' do 
+  test 'Destroy Promotion' do
+    user = login_as_before 
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                      expiration_date: '22/12/2033', user: user)
 
-    login_as_before
     visit promotions_path
     click_on 'Apagar'
 
@@ -264,9 +271,10 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'do view details without login' do 
+    user = User.create!(email: 'andre@iugu.com.br', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
-                                  coupon_quantity: 100, expiration_date: '22/12/2033')
+                                  coupon_quantity: 100, expiration_date: '22/12/2033', user: user)
 
     visit promotion_path(promotion)
 
@@ -280,9 +288,10 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'can not editing without login' do 
+    user = User.create!(email: 'andre@iugu.com.br', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
-                                  coupon_quantity: 100, expiration_date: '22/12/2033')
+                                  coupon_quantity: 100, expiration_date: '22/12/2033', user: user)
 
     visit promotion_path(promotion.id)
 
@@ -293,5 +302,38 @@ class PromotionsTest < ApplicationSystemTestCase
     visit search_promotions_path(q: 'test')
 
     assert_current_path new_user_session_path
+  end 
+
+  test 'user approves promotion' do
+    user = User.create!(email: 'adriano@iugu.com.br', password: '123456')
+    christmas = Promotion.create!(name: 'Natal',
+                                  description: 'Promoção de Natal',
+                                  code: 'NATAL10', discount_rate: 10,
+                                  coupon_quantity: 100,
+                                  expiration_date: '22/12/2033', user: user)
+
+    approver = login_as_before
+    visit promotion_path(christmas)
+    accept_confirm { click_on 'Aprovar' }
+
+    assert_text 'Promoção aprovada com sucesso'
+    assert_text "Aprovada por: #{approver.email}"
+    assert_button 'Gerar cupons'
+    refute_link 'Aprovar'
   end
+
+  test 'user can not approves his promotions' do
+    user = login_as_before
+    christmas = Promotion.create!(name: 'Natal',
+                                  description: 'Promoção de Natal',
+                                  code: 'NATAL10', discount_rate: 10,
+                                  coupon_quantity: 100,
+                                  expiration_date: '22/12/2033', user: user)
+
+    visit promotion_path(christmas)
+
+    refute_link 'Aprovar'
+    refute_link 'Gerar cupons'
+  end
+
 end
