@@ -4,7 +4,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   test 'view product ' do
     ProductCategory.create!(name: 'Produto AntiFraude', code: 'ANTIFRA')
 
-    login_as_before  
+    login_as_before
     visit root_path
     click_on 'Produtos'
 
@@ -31,7 +31,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   test 'return to home page' do
     ProductCategory.create!(name: 'Produto AntiFraude', code: 'ANTIFRA')
 
-    login_as_before  
+    login_as_before
     visit root_path
     click_on 'Produtos'
     click_on 'Home'
@@ -52,11 +52,11 @@ class ProductCategorysTest < ApplicationSystemTestCase
 
   test 'create product' do
     visit new_product_category_path
-  
+
     fill_in 'Nome', with: 'Produto Controle'
     fill_in 'Código', with: 'CONT123'
     click_on 'Criar produto'
-    
+
     assert_text 'Produto Controle'
     assert_text 'CONT123'
     assert_link 'Voltar'
@@ -91,7 +91,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   #   promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
   #                                 code: 'NATAL10', discount_rate: 10,
   #                                 coupon_quantity: 100, expiration_date: '22/12/2033')
-    
+
   #   visit promotion_path(promotion)
   #   click_on 'Gerar cupons'
 
@@ -119,7 +119,7 @@ class ProductCategorysTest < ApplicationSystemTestCase
   #   assert_text new_name
   # end
 
-  # test 'Destroy Promotion' do 
+  # test 'Destroy Promotion' do
   #   Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
   #                     code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
   #                     expiration_date: '22/12/2033')

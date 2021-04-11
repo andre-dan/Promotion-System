@@ -7,8 +7,7 @@ class PromotionsController < ApplicationController
     @promotions = Promotion.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @promotion = Promotion.new
@@ -23,11 +22,10 @@ class PromotionsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    return redirect_to @promotion, notice: t('.success') if @promotion.update(promotion_params) 
+    return redirect_to @promotion, notice: t('.success') if @promotion.update(promotion_params)
 
     render :edit
   end
@@ -45,17 +43,17 @@ class PromotionsController < ApplicationController
     redirect_to @promotion, notice: t('.success')
   end
 
-  def search 
+  def search
     @term = params[:q]
     @promotions = Promotion.search(@term)
-  end  
-
-  def approve 
-  current_user.promotion_approvals.create!(promotion: @promotion) 
-  redirect_to @promotion, notice: 'Promoção aprovada com sucesso'
   end
 
-  private 
+  def approve
+    current_user.promotion_approvals.create!(promotion: @promotion)
+    redirect_to @promotion, notice: 'Promoção aprovada com sucesso'
+  end
+
+  private
 
   def set_promotion
     @promotion = Promotion.find(params[:id])
@@ -69,7 +67,9 @@ class PromotionsController < ApplicationController
   end
 
   def can_be_approved
-    redirect_to @promotion,
-    alert: 'Ação não permitida' unless @promotion.can_approve?(current_user)
+    unless @promotion.can_approve?(current_user)
+      redirect_to @promotion,
+                  alert: 'Ação não permitida'
+    end
   end
 end

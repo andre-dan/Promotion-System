@@ -31,7 +31,7 @@ class PromotionsTest < ApplicationSystemTestCase
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
                       expiration_date: '22/12/2033', user: user)
-      
+
     visit root_path
     click_on 'Promoções'
     click_on 'Cyber Monday'
@@ -57,7 +57,7 @@ class PromotionsTest < ApplicationSystemTestCase
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', user: user)
-                                        
+
     visit root_path
     click_on 'Promoções'
     click_on 'Voltar'
@@ -81,7 +81,7 @@ class PromotionsTest < ApplicationSystemTestCase
 
   test 'create promotion' do
     login_as_before
-    visit root_path 
+    visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
     fill_in 'Nome', with: 'Cyber Monday'
@@ -116,7 +116,7 @@ class PromotionsTest < ApplicationSystemTestCase
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', user: user)
-  
+
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
@@ -216,7 +216,6 @@ class PromotionsTest < ApplicationSystemTestCase
                                      code: 'CYBER15', discount_rate: 15,
                                      expiration_date: '22/12/2033', user: user)
 
-    
     visit root_path
     click_on 'Promoções'
     fill_in 'Busca', with: 'test'
@@ -228,9 +227,9 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_text 'Nenhuma promoção encontrada para o termo: test'
   end
 
-  #TODO: Edit promotion only if the user is the create'
-  #redirect_to root_path, notice: 'Permissão negada: Você não é o Usuario Criador dessa Promoção' unless @promotion.user == current_user
-  
+  # TODO: Edit promotion only if the user is the create'
+  # redirect_to root_path, notice: 'Permissão negada: Você não é o Usuario Criador dessa Promoção' unless @promotion.user == current_user
+
   test 'Editing Promotion' do
     user = login_as_before
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
@@ -247,7 +246,7 @@ class PromotionsTest < ApplicationSystemTestCase
   end
 
   test 'Destroy Promotion' do
-    user = login_as_before 
+    user = login_as_before
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', user: user)
@@ -258,7 +257,7 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_text 'Promoção excluída com sucesso'
   end
 
-  test ' do not view promotion link without login' do 
+  test ' do not view promotion link without login' do
     visit root_path
 
     assert_no_link 'Promoções'
@@ -270,7 +269,7 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_current_path new_user_session_path
   end
 
-  test 'do view details without login' do 
+  test 'do view details without login' do
     user = User.create!(email: 'andre@iugu.com.br', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
@@ -287,7 +286,7 @@ class PromotionsTest < ApplicationSystemTestCase
     assert_current_path new_user_session_path
   end
 
-  test 'can not editing without login' do 
+  test 'can not editing without login' do
     user = User.create!(email: 'andre@iugu.com.br', password: '123456')
     promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                   code: 'NATAL10', discount_rate: 10,
@@ -302,7 +301,7 @@ class PromotionsTest < ApplicationSystemTestCase
     visit search_promotions_path(q: 'test')
 
     assert_current_path new_user_session_path
-  end 
+  end
 
   test 'user approves promotion' do
     user = User.create!(email: 'adriano@iugu.com.br', password: '123456')
@@ -335,5 +334,4 @@ class PromotionsTest < ApplicationSystemTestCase
     refute_link 'Aprovar'
     refute_link 'Gerar cupons'
   end
-
 end

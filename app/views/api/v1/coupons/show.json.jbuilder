@@ -1,1 +1,1 @@
-json.set! :discount_rate, @coupon.discount_rate 
+json.set! :discount_rate, @coupon.discount_rate
